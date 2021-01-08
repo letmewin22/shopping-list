@@ -1,0 +1,50 @@
+.App {
+  margin: auto;
+  max-width: 600px;
+  width: 600px;
+}
+
+
+
+.list-input {
+  margin-top: 24px;
+  background-color:  var(--bg);
+}
+
+.shopping-list__item {
+  display: flex;
+  justify-content: space-between;
+  background-color:  var(--bg);
+}
+
+.shopping-list__item--checked {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.shopping-list__item button {
+  transition: transform .2s ease;
+  
+}
+
+.shopping-list__item button:hover {
+  transform: scale(1.05);
+}
+
+.shopping-list__item i.red {
+  color: red;
+}
+
+.shopping-list__item i.green {
+  color: green;
+}
+
+@media screen and (max-width: 700px) {
+  .App {
+    width: calc(100% - 40px);
+  }
+
+  .list-input {
+    margin-top: 12px;
+  }
+}
