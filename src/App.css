@@ -4,10 +4,18 @@
   width: 600px;
 }
 
-
+.add-item-input {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 0.1fr;
+  grid-gap: 10px;
+}
+.add-item-input i {
+  display: block;
+  line-height: 1em;
+}
 
 .list-input {
-  margin-top: 24px;
   background-color:  var(--bg);
 }
 
@@ -44,7 +52,7 @@
     width: calc(100% - 40px);
   }
 
-  .list-input {
+  .add-item-input {
     margin-top: 12px;
   }
 }

@@ -9,8 +9,10 @@ class ShoppingList {
   }
 
   addItem(newItem: IListItem) {
-    this.list = [...this.list, newItem]
-    this.setItems()
+    if (newItem.value.trim().length > 0) {
+      this.list = [...this.list, newItem]
+      this.setItems()
+    }
   }
 
   removeItem(el: IListItem) {
