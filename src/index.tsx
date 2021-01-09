@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ListContextProvider } from './context/ListContext';
 
 ReactDOM.render(
-    <App />,
+  <ListContextProvider>
+    <App />
+  </ListContextProvider>,
   document.getElementById('root')
 );
 

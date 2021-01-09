@@ -1,22 +1,28 @@
 import React from 'react'
-import { observer } from 'mobx-react-lite'
+import {Observer} from 'mobx-react-lite'
 import ListItem from './ListItem'
-import shoppingList from '../store/shoppingList'
 import appLoader from '../store/appLoader'
-import { Loader } from './Loader'
+import {Loader} from './Loader'
+import {useListContext} from '../context/ListContext'
 
 const List = () => {
+  const {shoppingList} = useListContext()
 
-  const { list } = shoppingList
   return (
-    <ul className='list-group shopping-list'>
-    {appLoader.loading && (<Loader/>)}
-    {list.map(el => (
-      <ListItem key={el._id} el={el} />
-    ))}
-    {!list.length && !appLoader.loading && (<span>Список покупок пуст</span>)}
-  </ul>
+    <Observer>
+      {() => (
+        <ul className='list-group shopping-list'>
+          {appLoader.loading && (<Loader/>)}
+          {shoppingList.list.map(el => (
+            <ListItem key={el._id} el={el} />
+          ))}
+          {!shoppingList.list.length && !appLoader.loading && (
+            <span>Список покупок пуст</span>
+          )}
+        </ul>
+      )}
+    </Observer>
   )
 }
 
-export default observer(List)
+export default List

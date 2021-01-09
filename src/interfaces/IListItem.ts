@@ -1,5 +1,5 @@
 export interface IListItem {
-  _id: string
+  _id?: string
   checked: boolean
   value: string
 }

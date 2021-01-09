@@ -1,32 +1,34 @@
 import React, {useState, useEffect} from 'react'
-import {observer} from 'mobx-react-lite'
-import shoppingList from './store/shoppingList'
+import {Observer} from 'mobx-react-lite'
 import appLoader from './store/appLoader'
 import List from './components/List'
-import {keysGenerator} from './utils/keysGenerator'
 import {IListItem} from './interfaces/IListItem'
 import './App.css'
+import { useListContext } from './context/ListContext'
 
 const App = () => {
   const [input, setInput] = useState('')
+  const {shoppingList} = useListContext()
 
   useEffect(() => {
-    shoppingList.getItems()
-    appLoader.setLoader(false)
-  }, [])
+    const getItems = async() => {
+      await shoppingList.getItems()
+      appLoader.setLoader(false)
+    }
+    getItems()
+  }, [shoppingList])
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value)
   }
 
-  const createNewItem = () => {
+  const createNewItem = async () => {
     const newItem: IListItem = {
-      _id: keysGenerator(8),
       checked: false,
       value: input,
     }
 
-    shoppingList.addItem(newItem)
+    await shoppingList.addItem(newItem)
     setInput('')
   }
 
@@ -37,6 +39,8 @@ const App = () => {
   }
 
   return (
+    <Observer>
+    {() => (
     <div className='App'>
       <h1>Список покупок</h1>
       <div className='add-item-input'>
@@ -55,7 +59,9 @@ const App = () => {
       </div>
       <List />
     </div>
+    )}
+    </Observer>
   )
 }
 
-export default observer(App)
+export default App
