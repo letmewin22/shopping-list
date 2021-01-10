@@ -1,17 +1,15 @@
 import React from 'react'
 import { Observer } from 'mobx-react-lite'
 import {IListItem} from '../interfaces/IListItem'
-import {useListContext} from '../context/ListContext'
 
 type ListItemProps = {
-  el: IListItem
+  el: IListItem,
+  toggle: (el: IListItem) => Promise<void>
+  remove: (el: IListItem) => Promise<void>
 }
 
 
-const ListItem = ({el}: ListItemProps) => {
-  const {shoppingList} = useListContext()
-
-  console.log(shoppingList)
+const ListItem = ({el, toggle, remove}: ListItemProps) => {
 
   return (
     <Observer>
@@ -24,13 +22,13 @@ const ListItem = ({el}: ListItemProps) => {
           <span>{el.value}</span>
           <div className='shopping-list__item-btns'>
             <button
-              onClick={() => shoppingList.toggleCheckItem(el)}
+              onClick={toggle.bind(null, el)}
               aria-label='done'
             >
               <i className='green bi bi-bag-check'></i>
             </button>
             <button
-              onClick={() => shoppingList.removeItem(el)}
+              onClick={remove.bind(null, el)}
               aria-label='delete'
             >
               <i className='red bi bi-x-circle'></i>

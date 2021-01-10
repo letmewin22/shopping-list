@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {Observer} from 'mobx-react-lite'
-import appLoader from './store/appLoader'
 import List from './components/List'
 import {IListItem} from './interfaces/IListItem'
 import './App.css'
@@ -10,13 +9,6 @@ const App = () => {
   const [input, setInput] = useState('')
   const {shoppingList} = useListContext()
 
-  useEffect(() => {
-    const getItems = async() => {
-      await shoppingList.getItems()
-      appLoader.setLoader(false)
-    }
-    getItems()
-  }, [shoppingList])
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value)

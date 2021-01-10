@@ -3,7 +3,7 @@ import axios from 'axios'
 import {IListItem} from '../interfaces/IListItem'
 
 class ShoppingList {
-  @observable list: IListItem[] = []
+  @observable.shallow list: IListItem[] = []
 
   @action
   addItem = async (newItem: IListItem) => {
@@ -11,7 +11,6 @@ class ShoppingList {
       const res = await axios.post('http://localhost:5000/api/list/', newItem)
 
       if (res.status === 201) {
-        console.log(res)
         this.list = [...this.list, res.data.body]
       }
     }
@@ -25,12 +24,13 @@ class ShoppingList {
 
   @action
   toggleCheckItem = async (el: IListItem) => {
-    await axios.put(`http://localhost:5000/api/list/${el._id}`, {
+    const res = await axios.put(`http://localhost:5000/api/list/${el._id}`, {
       checked: !el.checked ? (el.checked = true) : (el.checked = false),
     })
+
     this.list = this.list.map(item => {
-      if (item === el) {
-        !item.checked ? (item.checked = true) : (item.checked = false)
+      if (item._id === res.data._id) {
+        return (item = res.data)
       }
       return item
     })
